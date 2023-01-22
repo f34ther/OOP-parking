@@ -2,38 +2,47 @@
 # tickets(), parkingSpaces(list), currentTicket(dictionary)
 
 class Garage():
-    tickets_limit = range(1, 11)
-    parking_limit = range(1, 11)
-    currentTicket = {
-        'paid': False
-    }
 
-    def __init__(self, y_new_ticket):
-        self.y_new_ticket = y_new_ticket
+    def __init__(self):
+        self.tickets_limit = 10
+        self.parking_limit = 10
+        self.currentTicket = {
+            'paid': False
+        }
 
     def takeTicket(self):
-        tickets_limit -= range(1)
-        parking_limit -= range(1)
-        return f'Tickets left: {len(tickets_limit)}; Parking Spaces left: {len(parking_limit)} '
+        self.tickets_limit -= 1
+        self.parking_limit -= 1
+        print(f'Parking tickets available: {self.tickets_limit}')
+        print(f'Parking spots available: {self.parking_limit}')
+        return f'Tickets left: {self.tickets_limit}; Parking Spaces left: {self.parking_limit} '
 
     def payForParking(self):
-        amount = input()
+        self.amount = input('Please enter $10 for parking payment: ')
 
-        if amount == input():
-            print(f'Amount due: ${amount}')
+        if self.amount < '10':
+            self.amount
+        elif self.amount > '10':
+            # overpayment
+            self.currentTicket['paid'] = True
+            print(f'Here is your change: ${int(self.amount)-10}')
         else:
-            currentTicket.paid = True
+            self.currentTicket['paid'] = True
             print('You have paid for your ticket, you have 15 minutes to leave.')
 
     def leaveGarage(self):
-        if currentTicket.paid == True:
-            tickets_limit += range(1)
-            parking_limit += range(1)
-            print('Thank you, have a nice day!')
-        else:
+        if self.currentTicket['paid'] == False:
             print('Please pay your ticket before exiting.')
 
+        else:
+            self.tickets_limit += 1
+            self.parking_limit += 1
+            print(f'Parking tickets available: {self.tickets_limit}')
+            print(f'Parking spots available: {self.parking_limit}')
+            print('Thank you, have a nice day!')
 
-ticket1 = Garage(1)
 
-ticket1.leaveGarage()
+ticket = Garage()
+ticket.takeTicket()
+ticket.payForParking()
+ticket.leaveGarage()
